@@ -2,7 +2,9 @@
 
 > The all-seeing code reviewer
 
-Multi-agent code quality and architecture review with cross-validation.
+Argus is a multi-agent code review system designed to detect and prevent architecture drift in evolving codebases.
+
+It runs specialized agents in parallel—covering areas like architecture, naming, dependency injection, dead code, and error handling—and validates every finding against the code. Argus also integrates with the Codex CLI and Gemini to cross-validate results across multiple LLMs, discarding any unverified issues and surfacing only accurate, actionable feedback.
 
 ## Quick Start
 
