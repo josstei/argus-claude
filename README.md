@@ -7,8 +7,11 @@ Multi-agent code quality and architecture review with cross-validation.
 ## Quick Start
 
 ```bash
+# Add marketplace
+/plugin marketplace add josstei/argus-claude
+
 # Install
-/plugin install github:josstei/argus
+/plugin install argus@josstei-argus-claude
 
 # Run a review
 /argus:review              # Shows confirmation prompt

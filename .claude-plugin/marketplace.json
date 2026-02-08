@@ -1,0 +1,12 @@
+{
+  "name": "argus-claude",
+  "description": "Multi-agent code quality and architecture review with cross-validation",
+  "plugins": [
+    {
+      "name": "argus",
+      "description": "Multi-agent code quality and architecture review with cross-validation",
+      "source": ".",
+      "version": "1.0.0"
+    }
+  ]
+}
