@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Argus Validation Result",
+  "description": "Schema for validation agent results",
+  "type": "object",
+  "required": ["originalFindingId", "validationStatus", "evidence", "notes"],
+  "properties": {
+    "originalFindingId": {
+      "type": "string",
+      "description": "ID from the original analysis finding"
+    },
+    "validationStatus": {
+      "type": "string",
+      "enum": ["CONFIRMED", "REJECTED", "MODIFIED", "IMPROVABLE", "NEEDS_REVIEW"],
+      "description": "Validation decision"
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["fileRead"],
+      "properties": {
+        "fileRead": {
+          "type": "boolean",
+          "description": "Was the file actually read"
+        },
+        "lineVerified": {
+          "type": "boolean",
+          "description": "Does the line contain the reported code"
+        },
+        "codeSnippet": {
+          "type": "string",
+          "description": "Actual code found at location"
+        },
+        "searchesPerformed": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Search patterns used"
+        },
+        "usagesFound": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Count of legitimate usages"
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Explanation of validation decision"
+    },
+    "modifications": {
+      "type": "object",
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "IMPROVEMENT"],
+          "description": "Corrected severity if MODIFIED"
+        },
+        "description": {
+          "type": "string",
+          "description": "Corrected description if MODIFIED"
+        },
+        "recommendation": {
+          "type": "string",
+          "description": "Corrected recommendation if MODIFIED"
+        }
+      }
+    },
+    "patternAssessment": {
+      "type": "object",
+      "properties": {
+        "isIntentional": {
+          "type": "boolean",
+          "description": "Appears to be by design"
+        },
+        "isOptimal": {
+          "type": "boolean",
+          "description": "Is this the best approach"
+        },
+        "optimalPatternDescription": {
+          "type": "string",
+          "description": "Better approach if not optimal"
+        },
+        "migrationSteps": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Steps to improve"
+        },
+        "technicalDebtCost": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH"],
+          "description": "Impact of keeping current pattern"
+        }
+      }
+    }
+  }
+}

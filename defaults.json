@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$comment": "Argus default configuration - override in ~/.claude/argus.json",
+
+  "scope": "auto",
+  "output": "inline",
+
+  "_reviewLevels": {
+    "fast": {
+      "label": "Fast",
+      "description": "Quick architecture and hygiene scan",
+      "subtext": "Haiku | ~2 min | Low token usage",
+      "settings": {
+        "model": "haiku",
+        "depth": "quick",
+        "strictness": "lenient",
+        "validators": ["claude"]
+      }
+    },
+    "balanced": {
+      "label": "Balanced",
+      "description": "Standard review covering architecture, hygiene, naming, and quality",
+      "subtext": "Sonnet | ~5 min | Moderate token usage",
+      "settings": {
+        "model": "sonnet",
+        "depth": "standard",
+        "strictness": "balanced",
+        "validators": ["claude"]
+      }
+    },
+    "comprehensive": {
+      "label": "Comprehensive",
+      "description": "Deep analysis of all code aspects with optimization review",
+      "subtext": "Opus | ~8 min | Higher token usage",
+      "settings": {
+        "model": "opus",
+        "depth": "thorough",
+        "strictness": "strict",
+        "validators": ["claude"],
+        "output": "markdown"
+      }
+    }
+  },
+
+  "_options": {
+    "model": ["opus", "sonnet", "haiku"],
+    "scope": ["auto", "src/", "lib/", "app/", "packages/", "."],
+    "depth": ["quick", "standard", "thorough"],
+    "validators": ["claude", "codex", "gemini"],
+    "output": ["inline", "markdown", "json"],
+    "strictness": ["lenient", "balanced", "strict"]
+  },
+
+  "_exclude": [
+    "node_modules/",
+    "dist/",
+    "build/",
+    ".git/",
+    "coverage/",
+    "*.min.js",
+    "*.bundle.js"
+  ]
+}

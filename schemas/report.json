@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Argus Report",
+  "description": "Schema for the final consolidated review report",
+  "type": "object",
+  "required": ["meta", "validationSummary", "healthScore", "verifiedFindings", "implementationPlan"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["generatedAt", "configUsed", "filesAnalyzed", "philosophy"],
+      "properties": {
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp of report generation"
+        },
+        "configUsed": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "enum": ["opus", "sonnet", "haiku"]
+            },
+            "validators": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "scope": {
+              "type": "string"
+            }
+          }
+        },
+        "filesAnalyzed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "philosophy": {
+          "type": "string",
+          "const": "Long-term excellence over quick fixes"
+        }
+      }
+    },
+    "validationSummary": {
+      "type": "object",
+      "required": ["totalOriginalFindings", "confirmed", "rejected", "modified", "improvable"],
+      "properties": {
+        "totalOriginalFindings": { "type": "integer", "minimum": 0 },
+        "confirmed": { "type": "integer", "minimum": 0 },
+        "rejected": { "type": "integer", "minimum": 0 },
+        "modified": { "type": "integer", "minimum": 0 },
+        "improvable": { "type": "integer", "minimum": 0 },
+        "needsReview": { "type": "integer", "minimum": 0 },
+        "rejectionRate": { "type": "string", "pattern": "^[0-9]+%$" }
+      }
+    },
+    "externalValidationSummary": {
+      "type": "object",
+      "properties": {
+        "providersUsed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "newDiscoveries": { "type": "integer", "minimum": 0 },
+        "confirmations": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "healthScore": {
+      "type": "object",
+      "required": ["overall", "architecture", "codeHygiene", "naming", "quality", "performance"],
+      "properties": {
+        "overall": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "architecture": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "codeHygiene": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "naming": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "quality": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "performance": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "verifiedFindings": {
+      "type": "array",
+      "items": {
+        "$ref": "finding.json"
+      },
+      "description": "All confirmed, modified, and improvable findings"
+    },
+    "patternEvolutionRoadmap": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["patternType", "currentState", "targetState", "affectedFiles"],
+        "properties": {
+          "patternType": { "type": "string" },
+          "currentState": { "type": "string" },
+          "targetState": { "type": "string" },
+          "migrationSteps": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "affectedFiles": { "type": "integer", "minimum": 1 },
+          "priority": {
+            "type": "string",
+            "enum": ["HIGH", "MEDIUM", "LOW"]
+          }
+        }
+      }
+    },
+    "implementationPlan": {
+      "type": "object",
+      "required": ["phase1Critical", "phase2HighPriority", "phase3Medium", "phase4LowAndImprovements"],
+      "properties": {
+        "phase1Critical": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Finding IDs for CRITICAL severity"
+        },
+        "phase2HighPriority": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Finding IDs for HIGH severity"
+        },
+        "phase3Medium": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Finding IDs for MEDIUM severity"
+        },
+        "phase4LowAndImprovements": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Finding IDs for LOW and IMPROVEMENT"
+        }
+      }
+    }
+  }
+}

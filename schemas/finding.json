@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Argus Finding",
+  "description": "Schema for individual code review findings from analysis agents",
+  "type": "object",
+  "required": ["id", "file", "line", "violation", "severity", "description", "recommendation"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]+-[0-9]+-[0-9]+$",
+      "description": "Unique identifier: {agent-id}-{sequence}"
+    },
+    "file": {
+      "type": "string",
+      "description": "Relative path from project root"
+    },
+    "line": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "1-indexed line number"
+    },
+    "violation": {
+      "type": "string",
+      "pattern": "^[A-Z]+_[A-Z_]+$",
+      "description": "Violation code from agent's type table"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "IMPROVEMENT"],
+      "description": "Issue severity level"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Clear explanation of the issue"
+    },
+    "currentPattern": {
+      "type": "string",
+      "description": "Description of what exists now"
+    },
+    "optimalPattern": {
+      "type": "string",
+      "description": "What the long-term ideal looks like"
+    },
+    "migrationPath": {
+      "type": "string",
+      "description": "Steps to evolve from current to optimal"
+    },
+    "recommendation": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Specific actionable fix"
+    },
+    "codeSnippet": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Relevant code excerpt, max 10 lines"
+    },
+    "source": {
+      "type": "string",
+      "enum": ["claude", "codex", "gemini"],
+      "description": "Which analyzer produced this finding"
+    }
+  }
+}

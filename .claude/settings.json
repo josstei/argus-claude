@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(codex --version:*)",
+      "Bash(codex exec:*)",
+      "Bash(gemini --version:*)",
+      "Bash(gemini analyze:*)",
+      "Bash(gemini prompt:*)"
+    ]
+  }
+}
