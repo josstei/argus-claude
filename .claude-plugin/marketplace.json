@@ -1,11 +1,18 @@
 {
   "name": "argus-claude",
   "description": "Multi-agent code quality and architecture review with cross-validation",
+  "owner": {
+    "name": "josstei"
+  },
   "plugins": [
     {
       "name": "argus",
       "description": "Multi-agent code quality and architecture review with cross-validation",
-      "source": ".",
+      "source": {
+        "source": "github",
+        "repo": "josstei/argus-claude",
+        "ref": "main"
+      },
       "version": "1.0.0"
     }
   ]
